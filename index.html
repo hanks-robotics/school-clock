@@ -8,11 +8,21 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: space-around;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
             margin: 0;
             background-color: #000000;
+        }
+        .header {
+            text-align: center;
+            margin: 20px;
+        }
+        .logo {
+            width: 100px; /* Adjust as needed */
+        }
+        .current-time {
+            font-size: 1.2em;
+            margin-bottom: 20px;
         }
         .container {
             display: flex;
@@ -33,28 +43,25 @@
         .time-period {
             margin: 10px 0;
         }
-        .current-time {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
+    <div class="header">
+        <img src="logo.png" alt="School Logo" class="logo">
+        <h1>Hanks Time</h1>
+        <div id="current-time" class="current-time">
+            <!-- Current time and date will be updated by JavaScript -->
+        </div>
+    </div>
     <div class="container">
         <div class="schedule">
             <h2>9th and 10th Grade</h2>
-            <div id="current-time-underclassmen" class="current-time">
-                <!-- Current time and date will be updated by JavaScript -->
-            </div>
             <div id="underclassmen-schedule">
                 <!-- Schedule will be updated by JavaScript -->
             </div>
         </div>
         <div class="schedule">
             <h2>11th and 12th Grade</h2>
-            <div id="current-time-upperclassmen" class="current-time">
-                <!-- Current time and date will be updated by JavaScript -->
-            </div>
             <div id="upperclassmen-schedule">
                 <!-- Schedule will be updated by JavaScript -->
             </div>

@@ -23,8 +23,7 @@ function displayCurrentTimeAndDate() {
     const timeString = formatTime(now);
     const dateString = formatDate(now);
 
-    document.getElementById('current-time-underclassmen').innerHTML = `Current Time: ${timeString} <br> Date: ${dateString}`;
-    document.getElementById('current-time-upperclassmen').innerHTML = `Current Time: ${timeString} <br> Date: ${dateString}`;
+    document.getElementById('current-time').innerHTML = `Current Time: ${timeString} <br> Date: ${dateString}`;
 }
 
 // Function to calculate time until the next period
