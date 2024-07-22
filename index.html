@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Schedule Countdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 50px;
+        }
+        .schedule {
+            text-align: center;
+        }
+        .period {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="schedule">
+            <h2>Underclassmen Schedule</h2>
+            <div id="underclassmen-countdown"></div>
+        </div>
+        <div class="schedule">
+            <h2>Upperclassmen Schedule</h2>
+            <div id="upperclassmen-countdown"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
