@@ -11,6 +11,22 @@ function formatTime(date) {
     return `${hours}:${formattedMinutes} ${period}`;
 }
 
+// Function to format date
+function formatDate(date) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
+}
+
+// Function to display current time and date
+function displayCurrentTimeAndDate() {
+    const now = new Date();
+    const timeString = formatTime(now);
+    const dateString = formatDate(now);
+
+    document.getElementById('current-time-underclassmen').innerHTML = `Current Time: ${timeString} <br> Date: ${dateString}`;
+    document.getElementById('current-time-upperclassmen').innerHTML = `Current Time: ${timeString} <br> Date: ${dateString}`;
+}
+
 // Function to calculate time until the next period
 function getTimeUntilNextPeriod(startTime, endTime) {
     const now = new Date();
@@ -88,14 +104,15 @@ function updateSchedule(scheduleId, schedule) {
     });
 }
 
-// Update the schedules every minute
+// Update the schedules and current time/date every minute
 function updateSchedules() {
+    displayCurrentTimeAndDate();
     updateSchedule('underclassmen-schedule', underclassmenSchedule);
     updateSchedule('upperclassmen-schedule', upperclassmenSchedule);
 }
 
-// Initial call to update schedules
+// Initial call to update schedules and time/date
 updateSchedules();
 
-// Update schedules every minute
+// Update schedules and time/date every minute
 setInterval(updateSchedules, 60000);
