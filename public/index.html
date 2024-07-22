@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Schedule Countdown</title>
+    <title>Hanks Time</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #f0f0f0;
         }
         .container {
             display: flex;
-            flex-direction: row;
-            gap: 50px;
+            justify-content: space-between;
+            width: 80%;
         }
         .schedule {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            width: 45%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
             text-align: center;
         }
-        .period {
+        .time-period {
             margin: 10px 0;
         }
     </style>
@@ -30,11 +39,15 @@
     <div class="container">
         <div class="schedule">
             <h2>Underclassmen Schedule</h2>
-            <div id="underclassmen-countdown"></div>
+            <div id="underclassmen-schedule">
+                <!-- Schedule will be updated by JavaScript -->
+            </div>
         </div>
         <div class="schedule">
             <h2>Upperclassmen Schedule</h2>
-            <div id="upperclassmen-countdown"></div>
+            <div id="upperclassmen-schedule">
+                <!-- Schedule will be updated by JavaScript -->
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
