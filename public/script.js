@@ -11,7 +11,8 @@ function updateCurrentTime() {
         minute: 'numeric',
         second: 'numeric',
         timeZone: 'America/Denver',
-        timeZoneName: 'short'
+        timeZoneName: 'short',
+        hour12: true
     };
     const timeString = now.toLocaleString('en-US', options);
     document.getElementById('current-time').innerText = timeString;
@@ -19,32 +20,32 @@ function updateCurrentTime() {
 
 const schedules = {
     underclassmen: [
-        { period: '0 Period', start: '07:30', end: '08:15' },
-        { period: '1 Period', start: '08:30', end: '09:15' },
-        { period: '2 Period', start: '09:20', end: '10:05' },
-        { period: '3 Period', start: '10:10', end: '10:55' },
-        { period: '4 Period', start: '11:00', end: '11:45' },
-        { period: '5 Period (Advisory)', start: '11:50', end: '12:20' },
-        { period: '6 Period (A Lunch)', start: '12:20', end: '12:50' },
-        { period: '7 Period', start: '12:55', end: '13:40' },
-        { period: '8 Period', start: '13:45', end: '14:30' },
-        { period: '9 Period', start: '14:35', end: '15:20' },
-        { period: '10 Period', start: '15:25', end: '16:10' },
-        { period: '11 Period', start: '16:15', end: '17:00' }
+        { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
+        { period: '1 Period', start: '08:30 AM', end: '09:15 AM' },
+        { period: '2 Period', start: '09:20 AM', end: '10:05 AM' },
+        { period: '3 Period', start: '10:10 AM', end: '10:55 AM' },
+        { period: '4 Period', start: '11:00 AM', end: '11:45 AM' },
+        { period: '5 Period (Advisory)', start: '11:50 AM', end: '12:20 PM' },
+        { period: '6 Period (A Lunch)', start: '12:20 PM', end: '12:50 PM' },
+        { period: '7 Period', start: '12:55 PM', end: '01:40 PM' },
+        { period: '8 Period', start: '01:45 PM', end: '02:30 PM' },
+        { period: '9 Period', start: '02:35 PM', end: '03:20 PM' },
+        { period: '10 Period', start: '03:25 PM', end: '04:10 PM' },
+        { period: '11 Period', start: '04:15 PM', end: '05:00 PM' }
     ],
     upperclassmen: [
-        { period: '0 Period', start: '07:30', end: '08:15' },
-        { period: '1 Period', start: '08:30', end: '09:15' },
-        { period: '2 Period', start: '09:20', end: '10:05' },
-        { period: '3 Period', start: '10:10', end: '10:55' },
-        { period: '4 Period', start: '11:00', end: '11:45' },
-        { period: '5 Period (Advisory)', start: '11:50', end: '12:20' },
-        { period: '6 Period', start: '12:25', end: '13:10' },
-        { period: '7 Period (B Lunch)', start: '13:10', end: '13:40' },
-        { period: '8 Period', start: '13:45', end: '14:30' },
-        { period: '9 Period', start: '14:35', end: '15:20' },
-        { period: '10 Period', start: '15:25', end: '16:10' },
-        { period: '11 Period', start: '16:15', end: '17:00' }
+        { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
+        { period: '1 Period', start: '08:30 AM', end: '09:15 AM' },
+        { period: '2 Period', start: '09:20 AM', end: '10:05 AM' },
+        { period: '3 Period', start: '10:10 AM', end: '10:55 AM' },
+        { period: '4 Period', start: '11:00 AM', end: '11:45 AM' },
+        { period: '5 Period (Advisory)', start: '11:50 AM', end: '12:20 PM' },
+        { period: '6 Period', start: '12:25 PM', end: '01:10 PM' },
+        { period: '7 Period (B Lunch)', start: '01:10 PM', end: '01:40 PM' },
+        { period: '8 Period', start: '01:45 PM', end: '02:30 PM' },
+        { period: '9 Period', start: '02:35 PM', end: '03:20 PM' },
+        { period: '10 Period', start: '03:25 PM', end: '04:10 PM' },
+        { period: '11 Period', start: '04:15 PM', end: '05:00 PM' }
     ]
 };
 
@@ -53,11 +54,11 @@ function getCurrentPeriod(schedule) {
     const currentTime = now.getHours() * 60 + now.getMinutes();
 
     for (let i = 0; i < schedule.length; i++) {
-        const [startHour, startMinute] = schedule[i].start.split(':').map(Number);
-        const start = startHour * 60 + startMinute;
+        const [startHour, startMinute, startPeriod] = schedule[i].start.split(/[: ]/);
+        const [endHour, endMinute, endPeriod] = schedule[i].end.split(/[: ]/);
 
-        const [endHour, endMinute] = schedule[i].end.split(':').map(Number);
-        const end = endHour * 60 + endMinute;
+        const start = ((startPeriod === 'PM' && parseInt(startHour) !== 12 ? parseInt(startHour) + 12 : parseInt(startHour)) * 60) + parseInt(startMinute);
+        const end = ((endPeriod === 'PM' && parseInt(endHour) !== 12 ? parseInt(endHour) + 12 : parseInt(endHour)) * 60) + parseInt(endMinute);
 
         if (currentTime >= start && currentTime < end) {
             return { current: schedule[i], next: schedule[i + 1] || null };
@@ -83,8 +84,9 @@ function updateSchedule(schedule, elementId, countdownElementId) {
 
     if (current) {
         const end = new Date(now);
-        const [endHour, endMinute] = current.end.split(':').map(Number);
-        end.setHours(endHour, endMinute, 0, 0);
+        const [endHour, endMinute] = current.end.split(/[: ]/).slice(0, 2).map(Number);
+        const endPeriod = current.end.split(' ')[1];
+        end.setHours(endPeriod === 'PM' && endHour !== 12 ? endHour + 12 : endHour, endMinute, 0, 0);
 
         const remainingTime = end - now;
         const hours = Math.floor(remainingTime / (1000 * 60 * 60));
@@ -94,15 +96,19 @@ function updateSchedule(schedule, elementId, countdownElementId) {
         const countdown = `${hours}h ${minutes}m ${seconds}s`;
 
         const countdownElement = document.getElementById(countdownElementId);
-        countdownElement.innerHTML = `Current: ${current.period} <br> Next: ${next ? next.period : 'End of day'} <br> <span>${countdown}</span>`;
+        countdownElement.innerHTML = `Current: ${current.period} | Ends in: ${countdown}`;
+
+        if (next) {
+            countdownElement.innerHTML += `<br>Next: ${next.period}`;
+        }
     } else {
-        document.getElementById(countdownElementId).innerHTML = 'School day is over.';
+        const countdownElement = document.getElementById(countdownElementId);
+        countdownElement.innerHTML = 'No current period';
     }
 
     schedule.forEach(period => {
-        const periodElement = document.createElement('div');
-        periodElement.className = 'time-period';
-        periodElement.innerHTML = `<strong>${period.period}:</strong> ${period.start} - ${period.end}`;
+        const periodElement = document.createElement('p');
+        periodElement.textContent = `${period.period}: ${period.start} - ${period.end}`;
         scheduleElement.appendChild(periodElement);
     });
 }
