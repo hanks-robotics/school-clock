@@ -12,7 +12,7 @@
             flex-direction: column;
             align-items: center;
             margin: 0;
-            background-color: #979797;
+            background-color: #c0c0c0;
         }
         .header {
             text-align: center;
@@ -31,6 +31,9 @@
             color: rgb(0, 0, 0);
             font-size: 3em;
             margin-bottom: 10px;
+        }
+        .schedule-selector {
+            margin: 20px;
         }
         .container {
             display: flex;
@@ -81,6 +84,14 @@
         <img src="logo.png" alt="School Logo" class="logo">
         <h1>Hanks Time</h1>
         <div id="current-time" class="current-time"></div>
+        <div class="schedule-selector">
+            <label for="schedule-select">Select a Schedule:</label>
+            <select id="schedule-select">
+                <option value="regular">Regular Schedule</option>
+                <option value="one-event">One Event Schedule</option>
+                <!-- Add other schedule options here -->
+            </select>
+        </div>
     </div>
     <div class="container">
         <div class="schedule">
