@@ -12,7 +12,7 @@
             flex-direction: column;
             align-items: center;
             margin: 0;
-            background-color: #c0c0c0;
+            background-color: #b1b1b1;
         }
         .header {
             text-align: center;
@@ -31,9 +31,6 @@
             color: rgb(0, 0, 0);
             font-size: 3em;
             margin-bottom: 10px;
-        }
-        .schedule-selector {
-            margin: 20px;
         }
         .container {
             display: flex;
@@ -61,6 +58,11 @@
         h2 {
             text-align: center;
         }
+        .schedule-select {
+            font-size: 1em;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
         @media (max-width: 768px) {
             h1 {
                 font-size: 2em;
@@ -84,14 +86,14 @@
         <img src="logo.png" alt="School Logo" class="logo">
         <h1>Hanks Time</h1>
         <div id="current-time" class="current-time"></div>
-        <div class="schedule-selector">
-            <label for="schedule-select">Select a Schedule:</label>
-            <select id="schedule-select">
-                <option value="regular">Regular Schedule</option>
-                <option value="one-event">One Event Schedule</option>
-                <!-- Add other schedule options here -->
-            </select>
-        </div>
+        <select id="schedule-select" class="schedule-select">
+            <option value="default">Default Schedule</option>
+            <option value="oneEvent">One Event Schedule</option>
+            <option value="twoHourDelay">2 Hour Delay</option>
+            <option value="earlyReleaseMorning">Early Release - Morning</option>
+            <option value="earlyReleaseAfternoon">Early Release - Afternoon</option>
+            <option value="testing">Testing Schedule</option>
+        </select>
     </div>
     <div class="container">
         <div class="schedule">

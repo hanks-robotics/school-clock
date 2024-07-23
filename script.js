@@ -10,16 +10,16 @@ function updateCurrentTime() {
         hour: 'numeric',
         minute: 'numeric',
         second: 'numeric',
+        hour12: true,
         timeZone: 'America/Denver',
-        timeZoneName: 'short',
-        hour12: true
+        timeZoneName: 'short'
     };
     const timeString = now.toLocaleString('en-US', options);
     document.getElementById('current-time').innerText = timeString;
 }
 
 const schedules = {
-    regular: {
+    default: {
         underclassmen: [
             { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
             { period: '1 Period', start: '08:30 AM', end: '09:15 AM' },
@@ -49,7 +49,7 @@ const schedules = {
             { period: '11 Period', start: '04:15 PM', end: '05:00 PM' }
         ]
     },
-    'one-event': {
+    oneEvent: {
         underclassmen: [
             { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
             { period: '1 Period', start: '08:30 AM', end: '09:08 AM' },
@@ -79,82 +79,156 @@ const schedules = {
             { period: '11 Period', start: '04:15 PM', end: '05:00 PM' }
         ]
     },
-    // Add other schedules here
+    twoHourDelay: {
+        underclassmen: [
+            { period: '1 Period', start: '10:30 AM', end: '11:00 AM' },
+            { period: '2 Period', start: '11:05 AM', end: '11:35 AM' },
+            { period: '3 Period', start: '11:40 AM', end: '12:10 PM' },
+            { period: '4 Period', start: '12:15 PM', end: '12:45 PM' },
+            { period: '5 Period', start: '12:50 PM', end: '01:20 PM' },
+            { period: '6 Period (A Lunch)', start: '01:20 PM', end: '01:50 PM' },
+            { period: '7 Period', start: '01:55 PM', end: '02:25 PM' },
+            { period: '8 Period', start: '02:30 PM', end: '03:00 PM' },
+            { period: '9 Period', start: '03:05 PM', end: '03:35 PM' },
+            { period: '10 Period', start: '03:40 PM', end: '04:10 PM' },
+            { period: '11 Period', start: '04:15 PM', end: '05:00 PM' }
+        ],
+        upperclassmen: [
+            { period: '1 Period', start: '10:30 AM', end: '11:00 AM' },
+            { period: '2 Period', start: '11:05 AM', end: '11:35 AM' },
+            { period: '3 Period', start: '11:40 AM', end: '12:10 PM' },
+            { period: '4 Period', start: '12:15 PM', end: '12:45 PM' },
+            { period: '5 Period', start: '12:50 PM', end: '01:20 PM' },
+            { period: '6 Period', start: '01:20 PM', end: '01:55 PM' },
+            { period: '7 Period (B Lunch)', start: '01:55 PM', end: '02:25 PM' },
+            { period: '8 Period', start: '02:30 PM', end: '03:00 PM' },
+            { period: '9 Period', start: '03:05 PM', end: '03:35 PM' },
+            { period: '10 Period', start: '03:40 PM', end: '04:10 PM' },
+            { period: '11 Period', start: '04:15 PM', end: '05:00 PM' }
+        ]
+    },
+    earlyReleaseMorning: {
+        underclassmen: [
+            { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
+            { period: '1 Period', start: '08:30 AM', end: '09:25 AM' },
+            { period: '2 Period', start: '09:30 AM', end: '10:30 AM' },
+            { period: '3 Period', start: '10:35 AM', end: '11:30 AM' },
+            { period: '4 Period', start: '11:35 AM', end: '12:30 PM' }
+        ],
+        upperclassmen: [
+            { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
+            { period: '1 Period', start: '08:30 AM', end: '09:25 AM' },
+            { period: '2 Period', start: '09:30 AM', end: '10:30 AM' },
+            { period: '3 Period', start: '10:35 AM', end: '11:30 AM' },
+            { period: '4 Period', start: '11:35 AM', end: '12:30 PM' }
+        ]
+    },
+    earlyReleaseAfternoon: {
+        underclassmen: [
+            { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
+            { period: '6 / 7 Period', start: '08:30 AM', end: '09:25 AM' },
+            { period: '8 Period', start: '09:30 AM', end: '10:30 AM' },
+            { period: '9 Period', start: '10:35 AM', end: '11:30 AM' },
+            { period: '10 Period', start: '10:35 AM', end: '11:30 AM' },
+            { period: '11 Period', start: '11:35 AM', end: '12:30 PM' }
+        ],
+        upperclassmen: [
+            { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
+            { period: '6 / 7 Period', start: '08:30 AM', end: '09:25 AM' },
+            { period: '8 Period', start: '09:30 AM', end: '10:30 AM' },
+            { period: '9 Period', start: '10:35 AM', end: '11:30 AM' },
+            { period: '10 Period', start: '10:35 AM', end: '11:30 AM' },
+            { period: '11 Period', start: '11:35 AM', end: '12:30 PM' }
+        ]
+    },
+    testing: {
+        underclassmen: [
+            { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
+            { period: '1 Period', start: '08:30 AM', end: '09:20 AM' },
+            { period: '2 Period', start: '09:25 AM', end: '10:15 AM' },
+            { period: '3 Period', start: '10:20 AM', end: '11:10 AM' },
+            { period: '4 Period', start: '11:15 AM', end: '12:05 PM' },
+            { period: '6 Period (A Lunch)', start: '12:10 PM', end: '01:00 PM' },
+            { period: '8 Period', start: '02:00 PM', end: '02:40 PM' },
+            { period: '9 Period', start: '02:45 PM', end: '03:25 PM' },
+            { period: '10 Period', start: '03:30 PM', end: '04:10 PM' },
+            { period: '11 Period', start: '04:15 PM', end: '05:00 PM' }
+        ],
+        upperclassmen: [
+            { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
+            { period: '1 Period', start: '08:30 AM', end: '09:20 AM' },
+            { period: '2 Period', start: '09:25 AM', end: '10:15 AM' },
+            { period: '3 Period', start: '10:20 AM', end: '11:10 AM' },
+            { period: '4 Period', start: '11:15 AM', end: '12:05 PM' },
+            { period: '6 Period (A Lunch)', start: '12:10 PM', end: '01:00 PM' },
+            { period: '8 Period', start: '02:00 PM', end: '02:40 PM' },
+            { period: '9 Period', start: '02:45 PM', end: '03:25 PM' },
+            { period: '10 Period', start: '03:30 PM', end: '04:10 PM' },
+            { period: '11 Period', start: '04:15 PM', end: '05:00 PM' }
+        ]
+    }
 };
 
-function getRemainingTime(endTime) {
-    const now = new Date().getTime();
-    const distance = endTime - now;
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    return { distance, hours, minutes, seconds };
-}
-
-function formatRemainingTime(hours, minutes, seconds) {
-    return `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+function formatTime(date) {
+    const hours = date.getHours() % 12 || 12;
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+    return `${hours}:${minutes} ${ampm}`;
 }
 
 function updateSchedule(schedule, scheduleElementId, countdownElementId) {
-    const scheduleElement = document.getElementById(scheduleElementId);
-    scheduleElement.innerHTML = '';
     const now = new Date();
-    const currentTime = now.getTime();
+    const today = now.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'America/Denver' });
 
-    let current = null;
-    let next = null;
+    let currentPeriod = null;
+    for (const period of schedule) {
+        const [startHour, startMinute] = period.start.split(':');
+        const [endHour, endMinute] = period.end.split(':');
+        const startTime = new Date(now);
+        const endTime = new Date(now);
+        startTime.setHours(parseInt(startHour) + (period.start.includes('PM') && parseInt(startHour) !== 12 ? 12 : 0), parseInt(startMinute));
+        endTime.setHours(parseInt(endHour) + (period.end.includes('PM') && parseInt(endHour) !== 12 ? 12 : 0), parseInt(endMinute));
 
-    for (let i = 0; i < schedule.length; i++) {
-        const period = schedule[i];
-        const startTime = new Date();
-        const [startHour, startMinute] = period.start.split(/[: ]/);
-        startTime.setHours(period.start.endsWith('PM') && startHour !== '12' ? +startHour + 12 : +startHour);
-        startTime.setMinutes(+startMinute);
-        startTime.setSeconds(0);
-
-        const endTime = new Date();
-        const [endHour, endMinute] = period.end.split(/[: ]/);
-        endTime.setHours(period.end.endsWith('PM') && endHour !== '12' ? +endHour + 12 : +endHour);
-        endTime.setMinutes(+endMinute);
-        endTime.setSeconds(0);
-
-        if (currentTime >= startTime.getTime() && currentTime <= endTime.getTime()) {
-            current = { ...period, endTime: endTime.getTime() };
-            next = i + 1 < schedule.length ? schedule[i + 1] : null;
+        if (now >= startTime && now < endTime) {
+            currentPeriod = period;
             break;
         }
     }
 
-    if (current) {
-        const countdownElement = document.getElementById(countdownElementId);
-        const { hours, minutes, seconds } = getRemainingTime(current.endTime);
-        countdownElement.innerHTML = `${current.period}: ${formatRemainingTime(hours, minutes, seconds)}<br>Ends in: ${formatRemainingTime(hours, minutes, seconds)}`;
+    if (currentPeriod) {
+        const endTime = new Date(now);
+        const [endHour, endMinute] = currentPeriod.end.split(':');
+        endTime.setHours(parseInt(endHour) + (currentPeriod.end.includes('PM') && parseInt(endHour) !== 12 ? 12 : 0), parseInt(endMinute));
+        const timeLeft = (endTime - now) / 1000;
+        const minutesLeft = Math.floor(timeLeft / 60);
+        const secondsLeft = Math.floor(timeLeft % 60);
 
-        if (next) {
-            countdownElement.innerHTML += `<br>Next: ${next.period}`;
+        document.getElementById(countdownElementId).innerText = `Time left in ${currentPeriod.period}: ${minutesLeft}m ${secondsLeft}s`;
+
+        const scheduleElement = document.getElementById(scheduleElementId);
+        scheduleElement.innerHTML = '';
+        for (const period of schedule) {
+            const periodElement = document.createElement('div');
+            periodElement.innerText = `${period.period}: ${period.start} - ${period.end}`;
+            scheduleElement.appendChild(periodElement);
         }
     } else {
-        const countdownElement = document.getElementById(countdownElementId);
-        countdownElement.innerHTML = 'No current period';
+        document.getElementById(countdownElementId).innerText = 'No ongoing period';
     }
-
-    schedule.forEach(period => {
-        const periodElement = document.createElement('p');
-        periodElement.textContent = `${period.period}: ${period.start} - ${period.end}`;
-        scheduleElement.appendChild(periodElement);
-    });
 }
 
-function updateAllSchedules() {
-    const selectedSchedule = document.getElementById('schedule-select').value;
+function updateSchedules() {
+    const scheduleSelect = document.getElementById('schedule-select');
+    const selectedSchedule = scheduleSelect.value;
+
     updateSchedule(schedules[selectedSchedule].underclassmen, 'underclassmen-schedule', 'underclassmen-countdown');
     updateSchedule(schedules[selectedSchedule].upperclassmen, 'upperclassmen-schedule', 'upperclassmen-countdown');
 }
 
-document.getElementById('schedule-select').addEventListener('change', updateAllSchedules);
-
-setInterval(updateCurrentTime, 1000);
-setInterval(updateAllSchedules, 1000);
+document.getElementById('schedule-select').addEventListener('change', updateSchedules);
 
 updateCurrentTime();
-updateAllSchedules();
+setInterval(updateCurrentTime, 1000);
+
+updateSchedules();
+setInterval(updateSchedules, 1000);
