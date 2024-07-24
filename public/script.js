@@ -129,16 +129,14 @@ const schedules = {
             { period: '6 / 7 Period', start: '08:30 AM', end: '09:25 AM' },
             { period: '8 Period', start: '09:30 AM', end: '10:30 AM' },
             { period: '9 Period', start: '10:35 AM', end: '11:30 AM' },
-            { period: '10 Period', start: '10:35 AM', end: '11:30 AM' },
-            { period: '11 Period', start: '11:35 AM', end: '12:30 PM' }
+            { period: '10 Period', start: '11:35 AM', end: '12:30 AM' },
         ],
         upperclassmen: [
             { period: '0 Period', start: '07:30 AM', end: '08:15 AM' },
             { period: '6 / 7 Period', start: '08:30 AM', end: '09:25 AM' },
             { period: '8 Period', start: '09:30 AM', end: '10:30 AM' },
             { period: '9 Period', start: '10:35 AM', end: '11:30 AM' },
-            { period: '10 Period', start: '10:35 AM', end: '11:30 AM' },
-            { period: '11 Period', start: '11:35 AM', end: '12:30 PM' }
+            { period: '10 Period', start: '11:35 AM', end: '12:30 AM' },
         ]
     },
     testing: {
