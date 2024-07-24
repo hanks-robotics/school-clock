@@ -195,6 +195,14 @@ function updateSchedule(schedule, scheduleElementId, countdownElementId) {
         }
     }
 
+    const scheduleElement = document.getElementById(scheduleElementId);
+    scheduleElement.innerHTML = '';
+    for (const period of schedule) {
+        const periodElement = document.createElement('li');
+        periodElement.innerText = `${period.period}: ${period.start} - ${period.end}`;
+        scheduleElement.appendChild(periodElement);
+    }
+
     if (currentPeriod) {
         const endTime = new Date(now);
         const [endHour, endMinute] = currentPeriod.end.split(':');
@@ -204,14 +212,6 @@ function updateSchedule(schedule, scheduleElementId, countdownElementId) {
         const secondsLeft = Math.floor(timeLeft % 60);
 
         document.getElementById(countdownElementId).innerText = `Time left in ${currentPeriod.period}: ${minutesLeft}m ${secondsLeft}s`;
-
-        const scheduleElement = document.getElementById(scheduleElementId);
-        scheduleElement.innerHTML = '';
-        for (const period of schedule) {
-            const periodElement = document.createElement('div');
-            periodElement.innerText = `${period.period}: ${period.start} - ${period.end}`;
-            scheduleElement.appendChild(periodElement);
-        }
     } else {
         document.getElementById(countdownElementId).innerText = 'No ongoing period';
     }
